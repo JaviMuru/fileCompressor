@@ -1,0 +1,16 @@
+{
+  "name": "fileszipper",
+  "version": "1.0.0",
+  "description": "Ejercicio cice",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Javi Muruzábal",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^2.1.1",
+    "fs": "0.0.1-security",
+    "inquirer": "^6.0.0"
+  }
+}
