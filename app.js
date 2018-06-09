@@ -38,7 +38,7 @@ async function runQuestions(questions) {
   })
 }
 
-async function addFilesAndCompress(files, outputFileName) {
+function addFilesAndCompress(files, outputFileName) {
   let output = fs.createWriteStream(`./${outputFileName}.zip`);
   let archive = archiver('zip', {
       gzip: true,
@@ -50,7 +50,10 @@ async function addFilesAndCompress(files, outputFileName) {
   archive.pipe(output);
 
   files.forEach((file) => {
-    archive.file(`./${file}`, {name: `./${file}`});
+    if (fs.existsSync(`./${file}`)) {
+      console.log('exist');
+      archive.file(`./${file}`, {name: `./${file}`});
+    }
   })
 
   archive.finalize();  
@@ -60,7 +63,7 @@ async function main() {
   let answers = await runQuestions(questions);
   if (answers.runApp) {
     let files = [answers.file1,answers.file2,answers.file3]    
-    await addFilesAndCompress(files, answers.outputZip);
+    addFilesAndCompress(files, answers.outputZip);
     console.log('Proceso finalizado');
   } else {
     console.log('Proceso Denegado por el usuario');
