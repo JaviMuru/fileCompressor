@@ -4,12 +4,6 @@ const archiver = require('archiver');
 
 const questions = [
   {
-    message: 'Quieres inicializar la aplicación?',
-    type: 'confirm',
-    default: false,
-    name: 'runApp'
-  },
-  {
     message: 'Introduce el nombre del primer fichero a comprimir',
     type: 'input',
     name: 'file1'
@@ -28,6 +22,12 @@ const questions = [
     message: 'Introduce el nombre del fichero comprimido',
     type: 'input',
     name: 'outputZip'
+  },
+  {
+    message: 'Quieres inicializar la aplicación?',
+    type: 'confirm',
+    default: false,
+    name: 'runApp'
   }
 ]
 
@@ -44,13 +44,15 @@ async function addFilesAndCompress(files, outputFileName) {
       gzip: true,
       zlib: { level: 9 }
   });
-  archive.on('error', function(err) {
+  archive.on('error', (err) => {
     throw err;
   });
   archive.pipe(output);
+
   files.forEach((file) => {
     archive.file(`./${file}`, {name: `./${file}`});
   })
+
   archive.finalize();  
 }
 
